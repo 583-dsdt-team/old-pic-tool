@@ -20,7 +20,7 @@ This user is looking for a place to start in identifying skin tone from old phot
 This user is looking for a place to start in identifying skin tone from old photos - the easiest, out-of-the-box method. This user will use our tool to produce a set of priors about their own set of photos and will use that in their research. They will need to feed their own pictures in and receive a basic guess about each person's skin tone or a data frame with a distribution of probabilities.  They are a skilled researcher but not necessarily a skilled programmer. 
 
 
-Use cases
+**Use cases** - initial thoughts
 * Crop picture to face - pre-processing
 * Produce single guess of skin tone bin
 * Produce probability distribution
