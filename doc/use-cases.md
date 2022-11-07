@@ -15,7 +15,7 @@ In this use case, users upload black and white photos and receive a single "most
 * Input: Set of image files
 * Output: 
 
-![Monk scale of skin tones](doc/monkscale.webp)
+![Monk scale of skin tones](monkscale.png)
 
 **Use case 3:** Produce probability distribution of skin tones 
 
