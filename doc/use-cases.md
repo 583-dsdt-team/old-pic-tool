@@ -1,7 +1,5 @@
 ## Functional design: use cases
 
-* Inputs
-* Outputs
 
 **Use case 1:** Crop picture to face
 
