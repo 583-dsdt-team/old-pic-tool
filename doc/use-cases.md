@@ -24,5 +24,5 @@ In this use case, users upload black and white photos and receive a data frame w
 **Use case 4:** Color detection with manually selected scales
 
 In this use case, users are not interested in using the monk scale, and would like to use their own set of hex codes to detect colors in an image.
-* Input: Set of image files depicting people with a unique identifier per file, A set of at least one pair of high and low hex codes,
+* Input: Set of image files with a unique identifier per file, a set of at least one pair of high and low hex codes
 * Output: Data frame with image ID's linked to probability for each user-defined color bin
