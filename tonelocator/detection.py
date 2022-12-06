@@ -7,18 +7,23 @@ import numpy
 import pandas
 
 
-rgb_df = pandas.read_csv('https://raw.githubusercontent.com/583-dsdt-team/old-picture-complexion-detection/main/detection/monk_scales_rgb.csv')
-bw_df = pandas.read_csv('https://raw.githubusercontent.com/583-dsdt-team/old-picture-complexion-detection/main/detection/monk_scales_bw.csv')
+rgb_df = pandas.read_csv('https://raw.githubusercontent.com/583-dsdt-team/old-picture-complexion-detection/main/tonelocator/data/monk_scales_rgb.csv')
+bw_df = pandas.read_csv('https://raw.githubusercontent.com/583-dsdt-team/old-picture-complexion-detection/main/tonelocator/data/monk_scales_bw.csv')
 
 def complexion_detection(image_path, rounding_places=2, grayscale=False):
     """
     Uses the inRange function in opencv
     Detects % of colors from ellis monk scale in image
     """
+
+
     filler = []
     temp_image = cv2.imread(image_path)
     
-
+    if temp_image is None:
+        raise ValueError("File or working directory does not exist.")
+    else:
+        pass
 
     if grayscale == False:
         for index in range(rgb_df.shape[0]):
