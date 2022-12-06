@@ -17,7 +17,6 @@ https://www.dropbox.com/s/dx0qvhhp5hbcx7z/colorization_release_v2.caffemodel?dl=
 
 """
 
-
 import numpy as np
 import cv2
 import os.path
@@ -87,13 +86,18 @@ def colorize_image(image_filename=None, cv2_frame=None):
     colorized = (255 * colorized).astype("uint8")
     return image, colorized
 
-
-
-
-
 # DMC - this code will select an image and colorize it
-image, colorized = colorize_image("./colorizer/input/gray_Aaron_Sorkin_0002.jpg")
+#image, colorized = colorize_image("./colorizer/input/gray_Aaron_Sorkin_0002.jpg")
+#data=cv2.imencode('.png', colorized)[1].tobytes()
+#cv2.imwrite("./colorizer/output/gray_Aaron_Sorkin_0002_colorized.jpg", colorized)
 
-data=cv2.imencode('.png', colorized)[1].tobytes()
+# get list of files in input folder
+input_folder = [f for f in os.listdir("./colorizer/input") if not f.startswith('.')]
 
-cv2.imwrite("./colorizer/output/gray_Aaron_Sorkin_0002_colorized.jpg", colorized)
+# Colorize each file in loop in input folder and save in output folder
+for photo in input_folder:
+    img = "./colorizer/input/" + photo
+    output = "./colorizer/output/" + photo.rsplit('.', 1)[0] + "_colorized." + photo.rsplit('.', 1)[1]
+    image, colorized = colorize_image(img)
+    data=cv2.imencode('.png', colorized)[1].tobytes()
+    cv2.imwrite(output, colorized)
