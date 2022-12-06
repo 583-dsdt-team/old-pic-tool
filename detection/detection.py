@@ -5,7 +5,7 @@ Module defines the color detection function
 import numpy
 import pandas
 
-import opencv
+import cv2
 
 rgb_df = pandas.read_csv('~/data/monk_scales_rgb.csv')
 bw_df = pandas.read_csv('~/data/monk_scales_bw.csv')
@@ -17,6 +17,10 @@ Detects % of colors from ellis monk scale in image
 """
     filler = []
     temp_image = cv2.imread(image_path)
+    
+    rgb_df = pandas.read_csv('monk_scales_rgb.csv')
+    bw_df = pandas.read_csv('monk_scales_bw.csv')
+
 
     if grayscale == False:
         for index in range(rgb_df.shape[0]):
