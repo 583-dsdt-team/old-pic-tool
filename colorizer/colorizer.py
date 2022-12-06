@@ -24,16 +24,20 @@ import os.path
 
 version = '1 December 2022'
 
-prototxt = r'model/colorization_deploy_v2.prototxt'
-model = r'model/colorization_release_v2.caffemodel'
-points = r'model/pts_in_hull.npy'
-points = os.path.join(os.path.dirname(__name__), points)        # DMC changing __file__ to __name__
+# DMC - added 'colorizer' to path name
+prototxt = r'colorizer/model/colorization_deploy_v2.prototxt'
+model = r'colorizer/model/colorization_release_v2.caffemodel'
+points = r'colorizer/model/pts_in_hull.npy'
+points = os.path.join(os.path.dirname(__name__), points)        # DMC changing "__file__" to "__name__"
 prototxt = os.path.join(os.path.dirname(__name__), prototxt)
 model = os.path.join(os.path.dirname(__name__), model)
+
+
 if not os.path.isfile(model):    # DMC - this is for the GUI - need to figure out how to add warning if not using GUI
     sg.popup_scrolled('Missing model file', 'You are missing the file "colorization_release_v2.caffemodel"',
                       'Download it and place into your "model" folder', 'You can download this file from this location:\n', r'https://www.dropbox.com/s/dx0qvhhp5hbcx7z/colorization_release_v2.caffemodel?dl=1')
     exit()
+    
 net = cv2.dnn.readNetFromCaffe(prototxt, model)     # load model from disk
 pts = np.load(points)
 
@@ -88,8 +92,8 @@ def colorize_image(image_filename=None, cv2_frame=None):
 
 
 # DMC - this code will select an image and colorize it
-image, colorized = colorize_image("./bw_photos/bw_photo_3.jpeg")
+image, colorized = colorize_image("./colorizer/input/gray_Aaron_Sorkin_0002.jpg")
 
 data=cv2.imencode('.png', colorized)[1].tobytes()
 
-cv2.imwrite("./colorized_photos/color_photo_3.jpeg", colorized)
+cv2.imwrite("./colorizer/output/gray_Aaron_Sorkin_0002_colorized.jpg", colorized)
