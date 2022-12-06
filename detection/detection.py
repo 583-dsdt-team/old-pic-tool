@@ -2,24 +2,22 @@
 Module defines the color detection function
 """
 
+import cv2
 import numpy
 import pandas
 
-import cv2
 
-rgb_df = pandas.read_csv('~/data/monk_scales_rgb.csv')
-bw_df = pandas.read_csv('~/data/monk_scales_bw.csv')
+rgb_df = pandas.read_csv('https://raw.githubusercontent.com/583-dsdt-team/old-picture-complexion-detection/main/detection/monk_scales_rgb.csv')
+bw_df = pandas.read_csv('https://raw.githubusercontent.com/583-dsdt-team/old-picture-complexion-detection/main/detection/monk_scales_bw.csv')
 
 def complexion_detection(image_path, rounding_places=2, grayscale=False):
-"""
-Uses the inRange function in opencv
-Detects % of colors from ellis monk scale in image
-"""
+    """
+    Uses the inRange function in opencv
+    Detects % of colors from ellis monk scale in image
+    """
     filler = []
     temp_image = cv2.imread(image_path)
     
-    rgb_df = pandas.read_csv('monk_scales_rgb.csv')
-    bw_df = pandas.read_csv('monk_scales_bw.csv')
 
 
     if grayscale == False:
