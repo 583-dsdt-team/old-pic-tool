@@ -1,9 +1,9 @@
 def mse_by_bin(true, pred):
     """
     Returns a pandas dataframe with ten mean square error results,
-    one for each complexion bin. 
+    one for each complexion bin.
     It takes two arguments: true and pred, which are both pandas
-    dataframes including these columns: "picid" which is a unique 
+    dataframes including these columns: "picid" which is a unique
     identifier of each image (and can be used to link across dataframes)
     and ten columns numbered from 0 to 9 which index the bins.
     """
@@ -20,7 +20,7 @@ def mse_by_bin(true, pred):
         if v not in true.columns:
             raise ValueError("true needs column named " + v)
         if v not in pred.columns:
-            raise ValueError("pred needs column named " + v)    
+            raise ValueError("pred needs column named " + v)
     # check that picid is a unique identifier
     if not true.nunique()['picid']==len(true):
         raise ValueError("picid does not uniquely identify obs in true")
