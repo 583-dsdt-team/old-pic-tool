@@ -5,3 +5,4 @@ A function for implementing facial recognition
 - Options for blur 
 """
 
+def face_detection(image_path, ):
