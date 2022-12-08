@@ -1,9 +1,18 @@
-def mse_by_bin(true, pred):
+"""
+Define confusion matrix function to assess fit based on maximum bin
+"""
+
+import pandas as pd
+import numpy as np
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+
+def conf_matrix(true, pred):
     """
-    Returns a pandas dataframe with ten mean square error results,
-    one for each complexion bin.
+    This function creates a confusion matrix comparing the true
+    "primary color bin" (the bin representing the highest percentage of the photo)
+    to the primary color bin predicted by the method in question.
     It takes two arguments: true and pred, which are both pandas
-    dataframes including these columns: "picid" which is a unique
+    dataframes including these columns: "picid" which is a unique 
     identifier of each image (and can be used to link across dataframes)
     and ten columns numbered from 0 to 9 which index the bins.
     """
@@ -20,7 +29,7 @@ def mse_by_bin(true, pred):
         if v not in true.columns:
             raise ValueError("true needs column named " + v)
         if v not in pred.columns:
-            raise ValueError("pred needs column named " + v)
+            raise ValueError("pred needs column named " + v)    
     # check that picid is a unique identifier
     if not true.nunique()['picid']==len(true):
         raise ValueError("picid does not uniquely identify obs in true")
@@ -35,27 +44,14 @@ def mse_by_bin(true, pred):
             raise ValueError('all picids in true need to be in pred')
     # check that columns 0 through 9 are numeric
     ## TODO
-    t['mse0'] = (t['0']-p['0'])**2
-    t['mse1'] = (t['1']-p['1'])**2
-    t['mse2'] = (t['2']-p['2'])**2
-    t['mse3'] = (t['3']-p['3'])**2
-    t['mse4'] = (t['4']-p['4'])**2
-    t['mse5'] = (t['5']-p['5'])**2
-    t['mse6'] = (t['6']-p['6'])**2
-    t['mse7'] = (t['7']-p['7'])**2
-    t['mse8'] = (t['8']-p['8'])**2
-    t['mse9'] = (t['9']-p['9'])**2
-    mses = pd.DataFrame({
-        'complexbin' : [0,1,2,3,4,5,6,7,8,9],
-        'mse' : [sum(t['mse0'])/len(t['mse0']), 
-            sum(t['mse1'])/len(t['mse1']),
-            sum(t['mse2'])/len(t['mse2']),
-            sum(t['mse3'])/len(t['mse3']),
-            sum(t['mse4'])/len(t['mse4']),
-            sum(t['mse5'])/len(t['mse5']),
-            sum(t['mse6'])/len(t['mse6']),
-            sum(t['mse7'])/len(t['mse7']),
-            sum(t['mse8'])/len(t['mse8']),
-            sum(t['mse9'])/len(t['mse9'])]
-    })
-    return mses
+    true['max_true'] = true[['0', '1', '2', '3', '4', '5', '6', 
+                             '7', '8', '9']].idxmax(axis=1)
+    pred['max_pred'] = pred[['0', '1', '2', '3', '4', '5', '6', 
+                             '7', '8', '9']].idxmax(axis=1)
+    tp = true[['picid', 'max_true']].merge(pred[['picid', 'max_pred']], on='picid')
+    unique = np.unique(tp[['max_true', 'max_pred']].values)
+    unique.sort()
+    cm = ConfusionMatrixDisplay(confusion_matrix(tp['max_true'], tp['max_pred']),
+                          display_labels=unique)
+    return cm
+    
