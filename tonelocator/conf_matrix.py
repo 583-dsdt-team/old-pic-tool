@@ -2,26 +2,52 @@
 Define confusion matrix function to assess fit based on maximum bin
 """
 
-def conf_matrix(data):
-    # TODO: add num_bins
-    # if type of data isn't pandas dataframe: return ValueError
-    # if data doesn't have the four requisite names - retrun ValueError
-    df = data
-    df_w = pd.pivot(df, index=['picid'], columns='bin')
-    print(df_w.head())
-    a = df_w.columns.get_level_values(0).astype(str)
-    print(a)
-    b = df_w.columns.get_level_values(1).astype(str)
-    print(b)
-    df_w.columns = [a,b]
-    df_w.columns = df_w.columns.map('_'.join)
-    print(df_w.head())
-    df_w['max_true'] = df_w[['true_1', 'true_2', 'true_3', 
-                         'true_4', 'true_5', 'true_6',
-                         'true_7', 'true_8', 'true_9', 
-                         'true_10']].idxmax(axis=1).str.removeprefix('true_')
-    df_w['max_pred'] = df_w[['pred_1', 'pred_2', 'pred_3', 'pred_4', 
-                       'pred_5', 'pred_6', 'pred_7', 'pred_8', 
-                       'pred_9', 'pred_10']].idxmax(axis=1).str.removeprefix('pred_')
-    cm1 = ConfusionMatrixDisplay(confusion_matrix(df_w['max_true'], df_w['max_pred']))
-    return cm1
+def conf_matrix(true, pred):
+    """
+    This function creates a confusion matrix comparing the true
+    "primary color bin" (the bin representing the highest percentage of the photo)
+    to the primary color bin predicted by the method in question.
+    It takes two arguments: true and pred, which are both pandas
+    dataframes including these columns: "picid" which is a unique 
+    identifier of each image (and can be used to link across dataframes)
+    and ten columns numbered from 0 to 9 which index the bins.
+    """
+    pred = pred.reset_index(drop=True)
+    true = true.reset_index(drop=True)
+    # check if true and pred are the correct type
+    if not type(true) == pd.core.frame.DataFrame:
+        raise ValueError("true needs to be a pandas dataframe")
+    if not type(pred) == pd.core.frame.DataFrame:
+        raise ValueError("pred needs to be a pandas dataframe")
+    # check if true and pred contain the right variables
+    reqvars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'picid']
+    for v in reqvars:
+        if v not in true.columns:
+            raise ValueError("true needs column named " + v)
+        if v not in pred.columns:
+            raise ValueError("pred needs column named " + v)    
+    # check that picid is a unique identifier
+    if not true.nunique()['picid']==len(true):
+        raise ValueError("picid does not uniquely identify obs in true")
+    if not pred.nunique()['picid']==len(pred):
+        raise ValueError("picid does not uniquely identify obs in pred")
+    # check that all picids in true are in pred and vice versa
+    for i in range(0,len(pred)):
+        if pred['picid'][i] not in true.picid.values:
+            raise ValueError('all picids in pred need to be in true')
+    for i in range(0,len(true)):
+        if true['picid'][i] not in pred.picid.values:
+            raise ValueError('all picids in true need to be in pred')
+    # check that columns 0 through 9 are numeric
+    ## TODO
+    true['max_true'] = true[['0', '1', '2', '3', '4', '5', '6', 
+                             '7', '8', '9']].idxmax(axis=1)
+    pred['max_pred'] = pred[['0', '1', '2', '3', '4', '5', '6', 
+                             '7', '8', '9']].idxmax(axis=1)
+    tp = true[['picid', 'max_true']].merge(pred[['picid', 'max_pred']], on='picid')
+    unique = np.unique(tp[['max_true', 'max_pred']].values)
+    unique.sort()
+    cm = ConfusionMatrixDisplay(confusion_matrix(tp['max_true'], tp['max_pred']),
+                          display_labels=unique)
+    return cm
+    
