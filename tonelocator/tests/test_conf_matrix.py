@@ -6,7 +6,7 @@ This module defines five tests of conf_matrix function from tonelocator
 
 import unittest
 import pandas as pd
-from tonelocator import conf_matrix
+import conf_matrix
 
 
 class TestConfMatrix(unittest.TestCase):
