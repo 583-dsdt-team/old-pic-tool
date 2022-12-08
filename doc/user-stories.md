@@ -8,7 +8,7 @@ Considerations:
 * What needs and desires do they have for the tool?
 * What is their skill level?
 
-**User 1: Peter**
+**User 1: "Peter"**
 
 Peter is a professional in the social sciences. He wants to use this tool to derive probabilistic skin tone from old photographs for research. Peter needs the tool to output a dataframe that is clearly documented and easy to export, graph, and interpret. Peter is a skilled researcher who can upload images and interpret output in the form of a spreadsheet but will struggle troubleshooting technical issues with the code.
 
