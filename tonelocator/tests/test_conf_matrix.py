@@ -39,7 +39,7 @@ class TestConfMatrix(unittest.TestCase):
              '7': [0, 0, .4],
              '8': [0, 0, 0],
              '9': [0, 0, 0],}        
-        tonelocator.conf_matrix(true=t, pred=p)
+        conf_matrix(true=t, pred=p)
         return
 
  #   def test_oneshot(self):
