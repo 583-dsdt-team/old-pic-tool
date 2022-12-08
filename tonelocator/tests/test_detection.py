@@ -2,9 +2,9 @@
 Module for testing the complexion detection function
 """
 import cv2
-import numpy
+import numpy as np
 import os
-import pandas
+import pandas as pd
 import unittest
 
 import detection
@@ -42,4 +42,4 @@ class TestDetection(unittest.TestCase):
         smoke_image_path = './data/practice_set/a_01.jpg'
         set1 = detection.complexion_detection(image_path = smoke_image_path, rounding_places = 1)
         set2 = detection.complexion_detection(image_path = smoke_image_path, rounding_places = 3)
-        assert numpy.isclose(, 2)
+        assert np.isclose(len(str(set1['4'])), 2)
