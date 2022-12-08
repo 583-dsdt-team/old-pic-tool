@@ -2,6 +2,10 @@
 Define confusion matrix function to assess fit based on maximum bin
 """
 
+import pandas as pd
+import numpy as np
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+
 def conf_matrix(true, pred):
     """
     This function creates a confusion matrix comparing the true
