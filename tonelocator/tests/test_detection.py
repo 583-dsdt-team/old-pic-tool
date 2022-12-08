@@ -33,13 +33,13 @@ class TestDetection(unittest.TestCase):
         with self.assertRaises(ValueError):
             detection.complexion_detection(test_no_picture_image_path)
     
-    def test_smoke(self):
+    def test_rounding_place(self):
         """
-        Smoke test for functionality
+        Rounding argument functionality
         Calls the detection on known picture in practice_set folder
-        Test is successful if no errors returned
+        Test is successful if column 4 returns ~ 3
         """
         smoke_image_path = './data/practice_set/a_01.jpg'
-        set1 = detection.complexion_detection(image_path = smoke_image_path, rounding_places = 1)
-        set2 = detection.complexion_detection(image_path = smoke_image_path, rounding_places = 3)
-        assert np.isclose(len(str(set1['4'])), 2)
+        set1 = detection.complexion_detection(image_path = smoke_image_path, rounding_places = 3)
+        assert np.isclose(len(str(set1[4])), 3)
+        return

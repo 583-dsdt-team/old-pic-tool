@@ -4,6 +4,7 @@ Module defines the color detection function
 
 import cv2
 import numpy as np
+import os
 import pandas as pd
 
 
@@ -16,12 +17,18 @@ def complexion_detection(image_path, rounding_places=2, grayscale=False):
     Detects % of colors from ellis monk scale in image
     """
 
-
     filler = []
+    path_check = os.path.isfile(image_path)
+
+    if path_check == False:
+        raise ValueError('File does not exist at this location')
+    else:
+        pass
+
     temp_image = cv2.imread(image_path)
     
     if temp_image is None:
-        raise ValueError("File or working directory does not exist.")
+        raise ValueError('Image file not read.')
     else:
         pass
 
