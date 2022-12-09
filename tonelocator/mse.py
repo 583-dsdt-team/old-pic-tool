@@ -14,8 +14,11 @@ def mse(true, pred, bybin):
     color bin; when False the function returns returns a single MSE for the
     entire set of bins.
     """
+    # preprocessing to ensure the DFs are in the correct format
     pred = pred.reset_index(drop=True)
     true = true.reset_index(drop=True)
+    pred.columns = pred.columns.astype(str)
+    true.columns = true.columns.astype(str)
     # check if true and pred are the correct type
     if not type(true) == pd.core.frame.DataFrame:
         raise ValueError("true needs to be a pandas dataframe")
