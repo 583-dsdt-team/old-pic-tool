@@ -24,19 +24,20 @@ import os.path
 version = '1 December 2022'
 
 # DMC - added 'colorizer' to path name
-prototxt = r'colorizer/model/colorization_deploy_v2.prototxt'
-model = r'colorizer/model/colorization_release_v2.caffemodel'
-points = r'colorizer/model/pts_in_hull.npy'
+prototxt = r'tonelocator/tonelocator/colorizer/model/colorization_deploy_v2.prototxt'
+model = r'tonelocator/tonelocator/colorizer/model/colorization_release_v2.caffemodel'
+points = r'tonelocator/tonelocator/colorizer/model/pts_in_hull.npy'
 points = os.path.join(os.path.dirname(__name__), points)        # DMC changing "__file__" to "__name__"
 prototxt = os.path.join(os.path.dirname(__name__), prototxt)
 model = os.path.join(os.path.dirname(__name__), model)
 
-
-if not os.path.isfile(model):    # DMC - this is for the GUI - need to figure out how to add warning if not using GUI
-    sg.popup_scrolled('Missing model file', 'You are missing the file "colorization_release_v2.caffemodel"',
-                      'Download it and place into your "model" folder', 'You can download this file from this location:\n', r'https://www.dropbox.com/s/dx0qvhhp5hbcx7z/colorization_release_v2.caffemodel?dl=1')
+if not os.path.isfile(model): 
+    print('You are missing the file "colorization_release_v2.caffemodel"', 
+        'Download it and place into your "model" folder', 'You can download this file from this location:\n', r'https://www.dropbox.com/s/dx0qvhhp5hbcx7z/colorization_release_v2.caffemodel?dl=1')
     exit()
-    
+else:
+    pass
+
 net = cv2.dnn.readNetFromCaffe(prototxt, model)     # load model from disk
 pts = np.load(points)
 
@@ -48,13 +49,8 @@ net.getLayer(class8).blobs = [pts.astype("float32")]
 net.getLayer(conv8).blobs = [np.full([1, 313], 2.606, dtype="float32")]
 
 def colorize_image(image_filename=None, cv2_frame=None):
-    # DMC - do we need the cv2_frame bit. This seems to colorize from a webcam, which we likely don't need for this project
     """
-    Where all the magic happens.  Colorizes the image provided. Can colorize either
-    a filename OR a cv2 frame (read from a web cam most likely)
-    :param image_filename: (str) full filename to colorize
-    :param cv2_frame: (cv2 frame)
-    :return: Tuple[cv2 frame, cv2 frame] both non-colorized and colorized images in cv2 format as a tuple
+    This sets up the colorizer. 
     """
     # load the input image from disk, scale the pixel intensities to the range [0, 1], and then convert the image from the BGR to Lab color space
     image = cv2.imread(image_filename) if image_filename else cv2_frame
@@ -86,18 +82,17 @@ def colorize_image(image_filename=None, cv2_frame=None):
     colorized = (255 * colorized).astype("uint8")
     return image, colorized
 
-# DMC - this code will select an image and colorize it
-#image, colorized = colorize_image("./colorizer/input/gray_Aaron_Sorkin_0002.jpg")
-#data=cv2.imencode('.png', colorized)[1].tobytes()
-#cv2.imwrite("./colorizer/output/gray_Aaron_Sorkin_0002_colorized.jpg", colorized)
 
 # get list of files in input folder
-input_folder = [f for f in os.listdir("./colorizer/input") if not f.startswith('.')]
+input_folder = [f for f in os.listdir("./tonelocator/tonelocator/colorizer/input") if not f.startswith('.')]
 
 # Colorize each file in loop in input folder and save in output folder
 for photo in input_folder:
-    img = "./colorizer/input/" + photo
-    output = "./colorizer/output/" + photo.rsplit('.', 1)[0] + "_colorized." + photo.rsplit('.', 1)[1]
+    """
+    Loop that will run through every file in the input folder, colorize them, and save the colorized image to the output folder.
+    """
+    img = "./tonelocator/tonelocator/colorizer/input/" + photo
+    output = "./tonelocator/tonelocator/colorizer/output/" + photo.rsplit('.', 1)[0] + "_colorized." + photo.rsplit('.', 1)[1]
     image, colorized = colorize_image(img)
     data=cv2.imencode('.png', colorized)[1].tobytes()
     cv2.imwrite(output, colorized)
