@@ -16,15 +16,16 @@ def conf_matrix(true, pred):
     identifier of each image (and can be used to link across dataframes)
     and ten columns numbered from 0 to 9 which index the bins.
     """
-    pred = pred.reset_index(drop=True)
-    true = true.reset_index(drop=True)
-    pred.columns = pred.columns.astype(str)
-    true.columns = true.columns.astype(str)
     # check if true and pred are the correct type
     if not type(true) == pd.core.frame.DataFrame:
         raise ValueError("true needs to be a pandas dataframe")
     if not type(pred) == pd.core.frame.DataFrame:
         raise ValueError("pred needs to be a pandas dataframe")
+    # small cleaning to make DFs ready to go
+    pred = pred.reset_index(drop=True)
+    true = true.reset_index(drop=True)
+    pred.columns = pred.columns.astype(str)
+    true.columns = true.columns.astype(str)
     # check if true and pred contain the right variables
     reqvars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'picid']
     for v in reqvars:
