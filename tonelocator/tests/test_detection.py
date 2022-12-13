@@ -37,9 +37,8 @@ class TestDetection(unittest.TestCase):
         """
         Rounding argument functionality
         Calls the detection on known picture in practice_set folder
-        Test is successful if column 4 returns ~ 3
+        Test is successful if column 4 returns ~ 4
         """
         smoke_image_path = './data/practice_set/a_01.jpg'
         set1 = detection.complexion_detection(image_path = smoke_image_path, rounding_places = 3)
-        assert np.isclose(len(str(set1[4])), 3)
-        return
+        self.assertEqual(len(str(set1[4])), 4)
