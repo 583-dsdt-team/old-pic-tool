@@ -19,7 +19,7 @@ We envision four primary use cases for these tools:
 * User loads set of black & white photos
 * Tool returns dataframe of estimated composition across color Monk scale
 
-4. **Test the effectiveness of different methods of colorizing.** In this case, a user is interested in assessing different methods of determining Monk Scale bin prevalence in black & white photos. The research team (Breon, David, and Lizzy) applied this use case -- we were interested in testing our two methods, as described on our poster and below. This use case could also apply to those who develop their own method of colorizing old photos and want to compare across methods.
+4: **Test the effectiveness of different methods of colorizing.** In this case, a user is interested in assessing different methods of determining Monk Scale bin prevalence in black & white photos. The research team (Breon, David, and Lizzy) applied this use case -- we were interested in testing our two methods, as described on our poster and below. This use case could also apply to those who develop their own method of colorizing old photos and want to compare across methods.
 * User loads set of true and predicted Monk scale composition values
 * Tool returns confusion matrix, percent correctly predicted, and overall MSE and MSE by bin
 
