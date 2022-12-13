@@ -1,7 +1,9 @@
-# Old Picture Complexion Detection
+# Tone Locator
 
-This project uses computer vision to identify complexion of people in black and white photos based on the Ellis Monk complexion scale (https://skintone.google/). This repository contains a variety of tools to support the analysis of photos, including: preprocessing photos of individuals by cropping to the subject's face, colorizing black and white photos, detecting the color composition of a photo (either color or black and white) based on the Monk scale, and assessing the accuracy of different methods to identify complexion. 
+This project uses computer vision to identify complexion of people in black and white photos based on the Ellis Monk complexion scale (https://skintone.google/). This repository contains a variety of tools to support the analysis of photos, including: preprocessing photos of individuals by cropping to the subject's face, colorizing black and white photos, detecting the color composition of a photo (either color or black and white) based on the Monk skin tone scale, and assessing the accuracy of different methods to identify complexion. 
 
+![Monk scale of skin tones](doc/monkscale.png)
+_The Monk scale._
 
 ## Use Cases 
 
@@ -50,6 +52,8 @@ flowchart TD
 
 ### Preprocesser (preprocess.py)
 
+This module takes photos of people and returns the photos cropped, and grayscale if requested. 
+
 ### Colorizer (colorizer/colorizer.py)
 
 The colorization algorithm was developed by Zhang, et al, and is detailed here:
@@ -79,9 +83,7 @@ python tonelocator/tonelocator/colorizer/colorizer.py
 
 5. The colorized photos will appear in the *output* folder within the *colorizer* folder.
 
-
 NOTE: All commands should be run from the folder in which the main *tonelocator* github repository was cloned into.
-
 
 
 ### Detector (detector.py)
@@ -90,12 +92,22 @@ This module ...
 
 Future iterations will have the ability to set your own color scale 
 
-### Modules to compare predicted color distribution to true distribution
+### Compare predicted color distribution to true distribution
+
+Three modules produce different results that illustrate how well a given predicted color composition matches a true color distribution. 
 
 #### conf_matrix.py
 
-This module 
+This module...
 
 #### pcp.py
+
+This module...
+
 #### mse.py
 
+This module...
+
+## Get Started
+
+To get a sense of how these tools work separately and together, clone the repository and open the Jupyter Notebook compare_detection_methods.ipynb in examples. This notebook walks through how we assessed the true Monk Scale composition of a set of color photos, tried two different methods of detecting Monk Scale composition from black & white photos, and compared how each method performed. 
