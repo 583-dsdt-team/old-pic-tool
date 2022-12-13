@@ -1,3 +1,9 @@
+"""
+Defines function to estimate the mean square error associated with
+a method of determining color composition from a black and white
+photo.
+"""
+
 import pandas as pd
 import numpy as np
 
@@ -5,10 +11,10 @@ def mse(true, pred, bybin):
     """
     Returns a pandas dataframe with ten mean square error results,
     one for each complexion bin.
-    It takes three arguments: 
-    First, true and pred, which are both pandas dataframes including these 
-    columns: "picid" which is a unique identifier of each image (and can 
-    be used to link across dataframes) and ten columns numbered from 0 to 9 
+    It takes three arguments:
+    First, true and pred, which are both pandas dataframes including these
+    columns: "picid" which is a unique identifier of each image (and can
+    be used to link across dataframes) and ten columns numbered from 0 to 9
     which index the bins.
     bybin is a boolean; when True the function returns a MSE value for each
     color bin; when False the function returns returns a single MSE for the
@@ -26,14 +32,14 @@ def mse(true, pred, bybin):
     true = true.reset_index(drop=True)
     pred.columns = pred.columns.astype(str)
     true.columns = true.columns.astype(str)
-    
+
     # check if true and pred contain the right variables
     reqvars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'picid']
-    for v in reqvars:
-        if v not in true.columns:
-            raise ValueError("true needs column named " + v)
-        if v not in pred.columns:
-            raise ValueError("pred needs column named " + v)
+    for var in reqvars:
+        if var not in true.columns:
+            raise ValueError("true needs column named " + var)
+        if var not in pred.columns:
+            raise ValueError("pred needs column named " + var)
     # check that picid is a unique identifier
     if not true.nunique()['picid']==len(true):
         raise ValueError("picid does not uniquely identify obs in true")
@@ -47,8 +53,7 @@ def mse(true, pred, bybin):
         if true['picid'][i] not in pred.picid.values:
             raise ValueError('all picids in true need to be in pred')
     # check that columns 0 through 9 are numeric
-    ## TODO
-    if bybin==True:
+    if bybin:
         true['mse0'] = (true['0']-pred['0'])**2
         true['mse1'] = (true['1']-pred['1'])**2
         true['mse2'] = (true['2']-pred['2'])**2
@@ -61,7 +66,7 @@ def mse(true, pred, bybin):
         true['mse9'] = (true['9']-pred['9'])**2
         mses = pd.DataFrame({
             'complexbin' : [0,1,2,3,4,5,6,7,8,9],
-            'mse' : [sum(true['mse0'])/len(true['mse0']), 
+            'mse' : [sum(true['mse0'])/len(true['mse0']),
                 sum(true['mse1'])/len(true['mse1']),
                 sum(true['mse2'])/len(true['mse2']),
                 sum(true['mse3'])/len(true['mse3']),
@@ -73,15 +78,17 @@ def mse(true, pred, bybin):
                 sum(true['mse9'])/len(true['mse9'])]
         })
         return mses
-    if bybin==False:
-        mse = (np.linalg.norm(true[['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']].iloc[0]-
-              pred[['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']].iloc[0]))**2/10
-        mses = pd.Series(mse)
+    if not bybin:
+        onemse = (np.linalg.norm(true[['0', '1', '2', '3', '4',
+                                       '5', '6', '7', '8', '9']].iloc[0]-
+                                 pred[['0', '1', '2', '3', '4',
+                                       '5', '6', '7', '8', '9']].iloc[0]))**2/10
+        mses = pd.Series(onemse)
         index = 1
         for j in range(1,len(true)):
-            mse = pd.Series((np.linalg.norm(true[['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']].iloc[index]-
+            onemse = pd.Series((np.linalg.norm(true[['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']].iloc[index]-
                       pred[['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']].iloc[index]))**2/10)
-            mses = pd.concat([mses, mse])
+            mses = pd.concat([mses, onemse])
             #print(mses)
             index += 1
         finalmse = sum(mses)/len(mses)

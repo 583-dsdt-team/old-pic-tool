@@ -12,7 +12,7 @@ def conf_matrix(true, pred):
     "primary color bin" (the bin representing the highest percentage of the photo)
     to the primary color bin predicted by the method in question.
     It takes two arguments: true and pred, which are both pandas
-    dataframes including these columns: "picid" which is a unique 
+    dataframes including these columns: "picid" which is a unique
     identifier of each image (and can be used to link across dataframes)
     and ten columns numbered from 0 to 9 which index the bins.
     """
@@ -28,11 +28,11 @@ def conf_matrix(true, pred):
     true.columns = true.columns.astype(str)
     # check if true and pred contain the right variables
     reqvars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'picid']
-    for v in reqvars:
-        if v not in true.columns:
-            raise ValueError("true needs column named " + v)
-        if v not in pred.columns:
-            raise ValueError("pred needs column named " + v)    
+    for var in reqvars:
+        if var not in true.columns:
+            raise ValueError("true needs column named " + var)
+        if var not in pred.columns:
+            raise ValueError("pred needs column named " + var)
     # check that picid is a unique identifier
     if not true.nunique()['picid']==len(true):
         raise ValueError("picid does not uniquely identify obs in true")
@@ -46,15 +46,14 @@ def conf_matrix(true, pred):
         if true['picid'][i] not in pred.picid.values:
             raise ValueError('all picids in true need to be in pred')
     # check that columns 0 through 9 are numeric
-    ## TODO
-    true['max_true'] = true[['0', '1', '2', '3', '4', '5', '6', 
+    true['max_true'] = true[['0', '1', '2', '3', '4', '5', '6',
                              '7', '8', '9']].idxmax(axis=1)
-    pred['max_pred'] = pred[['0', '1', '2', '3', '4', '5', '6', 
+    pred['max_pred'] = pred[['0', '1', '2', '3', '4', '5', '6',
                              '7', '8', '9']].idxmax(axis=1)
-    tp = true[['picid', 'max_true']].merge(pred[['picid', 'max_pred']], on='picid')
-    unique = np.unique(tp[['max_true', 'max_pred']].values)
+    truepred = true[['picid', 'max_true']].merge(pred[['picid', 'max_pred']], on='picid')
+    unique = np.unique(truepred[['max_true', 'max_pred']].values)
     unique.sort()
-    cm = ConfusionMatrixDisplay(confusion_matrix(tp['max_true'], tp['max_pred']),
+    cmat = ConfusionMatrixDisplay(confusion_matrix(truepred['max_true'], truepred['max_pred']),
                           display_labels=unique)
-    return cm
+    return cmat
     
