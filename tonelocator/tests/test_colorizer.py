@@ -5,6 +5,7 @@ Module for testing the colorizer function
 import unittest
 
 from colorizer import colorizer
+from tonelocator import detection
 
 class TestDetection(unittest.TestCase):
     """

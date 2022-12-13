@@ -6,6 +6,8 @@ This module defines five tests of pcp function from tonelocator
 
 import unittest
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+import pandas as pd
+from tonelocator import pcp
 
 
 class TestPCP(unittest.TestCase):
