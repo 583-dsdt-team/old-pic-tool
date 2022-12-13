@@ -6,6 +6,8 @@ This module defines five tests of mse function from tonelocator
 
 import unittest
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+import pandas as pd
+from tonelocator import mse
 
 
 class TestMSE(unittest.TestCase):
