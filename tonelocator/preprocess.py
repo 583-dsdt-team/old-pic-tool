@@ -10,7 +10,7 @@ import os
 import pandas as pd
 
 
-face_cascade = cv2.CascadeClassifier("./tonelocator/data/haarcascades/haarcascade_frontalface_default.xml")
+face_cascade = cv2.CascadeClassifier("./tonelocator/data/haarcascade_frontalface_default.xml")
     
 def face_crop(image_path, to_gray=False, gaussian_blur=False):
     """
