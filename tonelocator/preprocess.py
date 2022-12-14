@@ -10,7 +10,7 @@ import os
 import pandas
 
 
-face_cascade = cv2.CascadeClassifier("./data/haarcascades/haarcascade_frontalface_default.xml")
+face_cascade = cv2.CascadeClassifier("./tonelocator/data/haarcascades/haarcascade_frontalface_default.xml")
     
 def face_detection(origin_path, destination_path, keep_colors = True, gaussian_blur = False):
     """
