@@ -2,9 +2,11 @@
 Module for testing the colorizer function
 """
 
+import os.path
 import unittest
+import tempfile
 
-from colorizer import colorizer
+import tonelocator.colorizer.colorizer as colorizer
 
 class TestDetection(unittest.TestCase):
     """
@@ -17,14 +19,41 @@ class TestDetection(unittest.TestCase):
         Calls the colorizer on known picture in practice_set folder
         Test is successful if no errors returned
         """
-        smoke_image_path = './data/practice_set/a_01.jpg'
-        detection.complexion_detection(image_path = smoke_image_path)
+        smoke_image_path = os.path.join(os.path.dirname(__name__), r'tonelocator/colorizer/input/bw_photo_8.jpeg') 
+        colorizer.colorize_image(smoke_image_path)
     
     def test_no_picture(self):
         """
-        One shot test for missing file
-        Calls the detection on picture not in practice_set folder
+        One shot test for wrong filetype
+        Calls the colorizer on file that is not jpeg
         Test is successful if error is caught 
         """
-        test_no_picture_image_path = './data/practice_set/a_06.jpg'
-        detection.complexion_detection(test_no_picture_image_path)
+        test_no_image = os.path.join(os.path.dirname(__name__), r'tonelocator/data/test/test.txt') 
+        with self.assertRaises(ValueError):
+            colorizer.colorize_image(test_no_image)
+        return
+
+    def test_empty_folder(self):
+        """
+        One shot test for empty folder
+        Calls the colorize folder function on an empty folder
+        Test is successful if error is caught
+        """
+        test_empty_folder = tempfile.TemporaryDirectory()
+        with self.assertRaises(ValueError):
+            colorizer.colorize_folder(input_folder=print(test_empty_folder.name))
+        return
+
+"""
+test_empty_folder = tempfile.TemporaryDirectory()
+
+with tempfile.TemporaryDirectory() as tmpdirname:
+     print('created temporary directory', tmpdirname)
+
+
+tmpdir = tempfile.mktemp()
+os.rmdir(tmpdir)
+
+tmpdir = tempfile.TemporaryDirectory()
+
+"""

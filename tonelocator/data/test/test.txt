@@ -1,0 +1,2 @@
+This file is used to test the colorizer and make sure that it will provide the appropriate error
+when a non-image is selected for the colorizer function.

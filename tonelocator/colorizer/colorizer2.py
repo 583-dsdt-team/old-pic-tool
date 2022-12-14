@@ -20,7 +20,6 @@ https://www.dropbox.com/s/dx0qvhhp5hbcx7z/colorization_release_v2.caffemodel?dl=
 import numpy as np
 import cv2
 import os.path
-import imghdr
 
 version = '1 December 2022'
 
@@ -50,17 +49,12 @@ net.getLayer(class8).blobs = [pts.astype("float32")]
 net.getLayer(conv8).blobs = [np.full([1, 313], 2.606, dtype="float32")]
 
 
-def colorize_image(image_filename=None):
+def colorize_image(image_filename=None, cv2_frame=None):
     """
     This sets up the colorizer. 
     """
-    # Making sure image is in jpeg format
-    if imghdr.what(image_filename) != 'jpeg':
-        raise ValueError("Image not in jpeg format") 
-    else:
-        pass
     # load the input image from disk, scale the pixel intensities to the range [0, 1], and then convert the image from the BGR to Lab color space
-    image = cv2.imread(image_filename)
+    image = cv2.imread(image_filename) if image_filename else cv2_frame
     scaled = image.astype("float32") / 255.0
     lab = cv2.cvtColor(scaled, cv2.COLOR_BGR2LAB)
 
@@ -135,4 +129,6 @@ def colorize_folder(input_folder=input_dir, output_folder=output_dir):
         data=cv2.imencode('.png', colorized)[1].tobytes()
         cv2.imwrite(output, colorized)
 
-#imghdr.what('/Users/david/cse_583_final_project/tonelocator/tonelocator/colorizer/output/bw_photo_8_colorized.jpeg')
+
+
+bw_image
