@@ -88,9 +88,7 @@ NOTE: All commands should be run from the folder in which the main *tonelocator*
 
 ### Detector (detector.py)
 
-This module ... 
-
-Future iterations will have the ability to set your own color scale 
+This module detects the composition of each photo by bins on the Monk Scale. It can detect either color or grayscale versions of the Monk Scale. In future iterations of the tool, users will be able to set their own colors to detect in a photo. 
 
 ### Compare predicted color distribution to true distribution
 
@@ -98,15 +96,15 @@ Three modules produce different results that illustrate how well a given predict
 
 #### conf_matrix.py
 
-This module...
+This module takes as inputs two dataframes, one representing the "true" color distribution of an image and another representing a predicted version using the grayscale photo. The module calculates the most prominent color bin from the Monk Scale in each image in both the true and predicted data and returns a confusion matrix showing how well the method did at deriving color from the black and white image.
 
 #### pcp.py
 
-This module...
+This module takes the same inputs as conf_matrix and calculates the percent correctly predicted by comparing the color bin making up the largest share of the image in the true data vs. the predicted data. It returns the share of images for which the prediction method accurately predicted the most prominent color in the image.
 
 #### mse.py
 
-This module...
+This module again takes the same inputs as conf_matrix, as well as a boolean indicating whether to return the overall mean squared error of the prediction method, or a data frame which indicates the error for each color bin. 
 
 ## Get Started
 
