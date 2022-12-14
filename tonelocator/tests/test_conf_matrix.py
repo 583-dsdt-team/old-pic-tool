@@ -7,6 +7,7 @@ This module defines five tests of conf_matrix function from tonelocator
 
 import unittest
 import pandas as pd
+from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
 from tonelocator import conf_matrix
 
 class TestConfMatrix(unittest.TestCase):
