@@ -52,7 +52,7 @@ flowchart TD
 
 ### Preprocesser (preprocess.py)
 
-This module takes photos of people and returns the photos cropped, and grayscale if requested. 
+This module takes photos of people and returns the photos cropped. Can convert pictures to grayscale if requested. Can blur photos if requested.
 
 ### Colorizer (colorizer/colorizer.py)
 
@@ -88,7 +88,7 @@ NOTE: Step 4 should be run from the main *tonelocator* github repository folder.
 
 ### Detector (detector.py)
 
-This module detects the composition of each photo by bins on the Monk Scale. It can detect either color or grayscale versions of the Monk Scale. In future iterations of the tool, users will be able to set their own colors to detect in a photo. 
+This module detects the composition of each photo by bins on the Monk Scale. It can detect either color or grayscale versions of the Monk Scale. In future iterations of the tool, users will be able to set their own color bins to detect in a photo. 
 
 ### Compare predicted color distribution to true distribution
 
