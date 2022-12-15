@@ -78,7 +78,7 @@ git clone git@github.com:583-dsdt-team/tonelocator.git
 4. Run python code from terminal:
 
 ```
-python tonelocator/tonelocator/colorizer/colorizer.py
+python tonelocator/colorizer/colorizer.py
 ```
 
 5. The colorized photos will appear in the *output* folder within the *colorizer* folder.
