@@ -1,5 +1,7 @@
 # Tone Locator
 
+![Python Package using Conda](https://github.com/583-dsdt-team/tonelocator/actions/workflows/python-package-conda.yml/badge.svg)
+
 This project uses computer vision to identify complexion of people in black and white photos based on the Ellis Monk complexion scale (https://skintone.google/). This repository contains a variety of tools to support the analysis of photos, including: preprocessing photos of individuals by cropping to the subject's face, colorizing black and white photos, detecting the color composition of a photo (either color or black and white) based on the Monk skin tone scale, and assessing the accuracy of different methods to identify complexion in black and white photos. 
 
 ![Monk scale of skin tones](doc/monkscale.png)
