@@ -3,15 +3,10 @@ Module for testing the colorizer function
 """
 
 import os.path
-import unittest
 import tempfile
+import unittest
 
-<<<<<<< HEAD
 import tonelocator.colorizer.colorizer as colorizer
-=======
-from tonelocator.colorizer import colorizer
-from tonelocator import detection
->>>>>>> 23a4df31cd3cf879c6e597e71e16fe5dc4c656b4
 
 class TestDetection(unittest.TestCase):
     """
@@ -44,9 +39,9 @@ class TestDetection(unittest.TestCase):
         Calls the colorize folder function on an empty folder
         Test is successful if error is caught
         """
-        test_empty_folder = tempfile.TemporaryDirectory()
+        test_empty_folder = os.path.join(os.path.dirname(__name__), r'tonelocator/data/test/empty_test_folder') 
         with self.assertRaises(ValueError):
-            colorizer.colorize_folder(input_folder=print(test_empty_folder.name))
+            colorizer.colorize_folder(input_folder=test_empty_folder)
         return
 
 """
