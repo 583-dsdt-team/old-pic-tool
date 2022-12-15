@@ -21,6 +21,9 @@ jobs:
     - name: Install dependencies
       run: |
         conda env update --file environment.yml --name base
+    - name: Download colorizer dependency from Dropbox
+      run: |
+        wget https://www.dropbox.com/s/dx0qvhhp5hbcx7z/colorization_release_v2.caffemodel?dl=1 -O ./tonelocator/colorizer/model/colorization_release_v2.caffemodel
     - name: Lint with flake8
       run: |
         conda install flake8
