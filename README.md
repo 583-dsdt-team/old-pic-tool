@@ -83,7 +83,7 @@ python tonelocator/tonelocator/colorizer/colorizer.py
 
 5. The colorized photos will appear in the *output* folder within the *colorizer* folder.
 
-NOTE: All commands should be run from the folder in which the main *tonelocator* github repository was cloned into.
+NOTE: Step 4 should be run from the main *tonelocator* github repository folder.
 
 
 ### Detector (detector.py)
