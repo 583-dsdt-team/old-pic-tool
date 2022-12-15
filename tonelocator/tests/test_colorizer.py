@@ -44,16 +44,3 @@ class TestDetection(unittest.TestCase):
             colorizer.colorize_folder(input_folder=test_empty_folder)
         return
 
-"""
-test_empty_folder = tempfile.TemporaryDirectory()
-
-with tempfile.TemporaryDirectory() as tmpdirname:
-     print('created temporary directory', tmpdirname)
-
-
-tmpdir = tempfile.mktemp()
-os.rmdir(tmpdir)
-
-tmpdir = tempfile.TemporaryDirectory()
-
-"""

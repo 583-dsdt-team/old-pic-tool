@@ -8,8 +8,8 @@ import os
 import pandas as pd
 
 
-rgb_df = pd.read_csv('https://raw.githubusercontent.com/583-dsdt-team/old-picture-complexion-detection/main/tonelocator/data/monk_scales_rgb.csv')
-bw_df = pd.read_csv('https://raw.githubusercontent.com/583-dsdt-team/old-picture-complexion-detection/main/tonelocator/data/monk_scales_bw.csv')
+rgb_df = pd.read_csv('./tonelocator/data/monk_scales_rgb.csv')
+bw_df = pd.read_csv('./tonelocator/data/monk_scales_bw.csv')
 
 def complexion_detection(image_path, rounding_places=2, grayscale=False):
     """

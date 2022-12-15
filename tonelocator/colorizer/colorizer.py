@@ -34,11 +34,10 @@ MODEL = os.path.join(os.path.dirname(__name__), MODEL)
 POINTS = os.path.join(os.path.dirname(__name__), POINTS)
 
 if not os.path.isfile(MODEL):
-    print('You are missing the file "colorization_release_v2.caffemodel"',
+    raise ValueError('You are missing the file "colorization_release_v2.caffemodel"',
         'Download it and place into your "model" folder',
         'You can download this file from this location:\n',
         r'https://www.dropbox.com/s/dx0qvhhp5hbcx7z/colorization_release_v2.caffemodel?dl=1')
-    sys.exit()
 else:
     pass
 
